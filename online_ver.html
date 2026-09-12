@@ -1,0 +1,629 @@
+<title>FinePrint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..800,0..100,0..1&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#eceff4;
+  --surface:#ffffff;
+  --surface-sunk:#f4f6f9;
+  --ink:#131821;
+  --ink-2:#3d4756;
+  --ink-3:#6b7686;
+  --hair:#d7dce5;
+  --hair-soft:#e6eaf1;
+  --accent:#2d4a9e;
+  --accent-soft:#e7ecf9;
+  --crit:#a8231c;
+  --crit-soft:#fbeceb;
+  --high:#8f5306;
+  --high-soft:#fbf1e2;
+  --watch:#455263;
+  --watch-soft:#eaeef3;
+  --void:#14614a;
+  --void-soft:#e6f2ed;
+  --shadow:0 1px 2px rgba(19,24,33,.06), 0 8px 24px -12px rgba(19,24,33,.18);
+  --shadow-lift:0 2px 4px rgba(19,24,33,.07), 0 18px 40px -20px rgba(19,24,33,.3);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Public Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --disp:"Fraunces",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101319;
+    --surface:#181c24;
+    --surface-sunk:#13171e;
+    --ink:#e9ecf2;
+    --ink-2:#b6becd;
+    --ink-3:#8a94a5;
+    --hair:#2b3240;
+    --hair-soft:#232934;
+    --accent:#93aaf2;
+    --accent-soft:#1e2740;
+    --crit:#f08b82;
+    --crit-soft:#2e1a19;
+    --high:#e0a95e;
+    --high-soft:#2b2216;
+    --watch:#9aa6b8;
+    --watch-soft:#20262f;
+    --void:#6fc7a2;
+    --void-soft:#16271f;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101319;
+  --surface:#181c24;
+  --surface-sunk:#13171e;
+  --ink:#e9ecf2;
+  --ink-2:#b6becd;
+  --ink-3:#8a94a5;
+  --hair:#2b3240;
+  --hair-soft:#232934;
+  --accent:#93aaf2;
+  --accent-soft:#1e2740;
+  --crit:#f08b82;
+  --crit-soft:#2e1a19;
+  --high:#e0a95e;
+  --high-soft:#2b2216;
+  --watch:#9aa6b8;
+  --watch-soft:#20262f;
+  --void:#6fc7a2;
+  --void-soft:#16271f;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 18px 40px -20px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;text-wrap:balance;font-family:var(--disp);
+  font-variation-settings:"opsz" 60,"SOFT" 0,"WONK" 1;font-weight:600;letter-spacing:-.01em;line-height:1.14}
+p{margin:0}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+.wrap{max-width:1060px;margin:0 auto;padding-inline:20px;padding-block:0}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--hair);background:var(--surface)}
+.mast-in{max-width:1060px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-family:var(--disp);font-variation-settings:"opsz" 24,"WONK" 1;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.logo em{font-style:normal;color:var(--accent)}
+.tagline{font-size:12.5px;color:var(--ink-3);border-left:1px solid var(--hair);padding-left:14px}
+.mast-spacer{flex:1}
+.proto{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--high);background:var(--high-soft);padding:4px 8px;border-radius:3px;white-space:nowrap}
+
+/* ---------- screens ---------- */
+.screen{display:none}
+.screen.on{display:block}
+
+/* ---------- intake ---------- */
+.intake{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:start;padding-block:56px 72px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.intake h1{font-size:clamp(34px,5vw,48px);font-variation-settings:"opsz" 120,"SOFT" 0,"WONK" 1;margin-top:12px}
+.intake h1 span{color:var(--accent)}
+.lede{margin-top:18px;color:var(--ink-2);font-size:17px;max-width:44ch}
+.lede strong{color:var(--ink);font-weight:600}
+
+.filecard{margin-top:30px;background:var(--surface);border:1px solid var(--hair);border-radius:8px;
+  padding:18px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.fileglyph{width:38px;height:46px;flex:none;border:1px solid var(--hair);border-radius:2px;background:var(--surface-sunk);
+  position:relative;overflow:hidden}
+.fileglyph i{position:absolute;left:6px;right:9px;height:2px;background:var(--hair);border-radius:2px}
+.fileglyph i:nth-child(1){top:8px}.fileglyph i:nth-child(2){top:14px}.fileglyph i:nth-child(3){top:20px;right:16px}
+.fileglyph i:nth-child(4){top:28px}.fileglyph i:nth-child(5){top:34px;right:14px}
+.filename{font-weight:600;font-size:15px}
+.filemeta{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.swap{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px}
+
+.go{margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--accent);color:#fff;padding:13px 22px;border-radius:6px;font-weight:600;font-size:15.5px;
+  box-shadow:var(--shadow);transition:transform .12s ease, filter .12s ease}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#0d1018}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn{color:#fff}}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.gonote{font-size:13px;color:var(--ink-3);max-width:26ch}
+
+/* document preview */
+.paper{background:var(--surface);border:1px solid var(--hair);border-radius:6px;box-shadow:var(--shadow-lift);
+  padding:34px 38px;max-height:640px;overflow:auto;position:relative}
+.paper::after{content:"";position:sticky;bottom:-34px;display:block;height:70px;margin:0 -38px -34px;
+  background:linear-gradient(to bottom,transparent,var(--surface))}
+.paper h4{font-size:13px;text-align:center;font-variation-settings:"opsz" 14,"WONK" 0;letter-spacing:.14em;text-transform:uppercase}
+.paper .addr{text-align:center;font-size:11px;color:var(--ink-3);margin-top:6px;font-family:var(--mono)}
+.paper hr{border:0;border-top:1px solid var(--hair-soft);margin:18px 0}
+.paper p{font-size:11.5px;line-height:1.72;color:var(--ink-2);margin-bottom:11px;text-align:justify;hyphens:auto}
+.paper p b{color:var(--ink);font-weight:600}
+.paper .art{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:18px 0 8px}
+
+/* ---------- analyzing ---------- */
+.scan{min-height:62vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding-block:80px}
+.scan h2{font-size:26px;font-variation-settings:"opsz" 48,"WONK" 1}
+.steps{width:100%;max-width:430px;display:flex;flex-direction:column;gap:2px}
+.step{display:flex;gap:12px;align-items:baseline;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);
+  padding:9px 0;border-bottom:1px solid var(--hair-soft);opacity:.35;transition:opacity .3s ease,color .3s ease}
+.step.done{opacity:1;color:var(--ink-2)}
+.step .tick{color:var(--void);width:14px;flex:none;opacity:0;transition:opacity .3s ease}
+.step.done .tick{opacity:1}
+.step .val{margin-left:auto;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ---------- report ---------- */
+.report{padding-block:40px 90px}
+.rhead{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap;
+  padding-bottom:22px;border-bottom:1px solid var(--hair)}
+.rhead h1{font-size:clamp(26px,4vw,34px);font-variation-settings:"opsz" 90,"WONK" 1}
+.rhead .sub{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:8px;letter-spacing:.02em}
+.restart{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-decoration:underline;text-underline-offset:3px}
+
+.verdict{margin-top:26px;background:var(--surface);border:1px solid var(--hair);border-left:3px solid var(--crit);
+  border-radius:6px;padding:24px 26px;box-shadow:var(--shadow)}
+.verdict .vlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--crit)}
+.verdict h2{font-size:22px;margin-top:10px;font-variation-settings:"opsz" 40,"WONK" 1;max-width:32ch}
+.verdict p{margin-top:12px;color:var(--ink-2);font-size:15px;max-width:68ch}
+
+.stats{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  border:1px solid var(--hair);border-radius:6px;overflow:hidden;background:var(--surface)}
+.stat{padding:15px 18px;border-right:1px solid var(--hair-soft)}
+.stat:last-child{border-right:0}
+.stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.stat .v{font-family:var(--disp);font-variation-settings:"opsz" 40,"WONK" 1;font-weight:700;
+  font-size:26px;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat.c .v{color:var(--crit)}
+.stat.g .v{color:var(--void)}
+
+.sectitle{margin-top:46px;display:flex;align-items:baseline;gap:14px}
+.sectitle h3{font-size:19px;font-variation-settings:"opsz" 30,"WONK" 1}
+.sectitle .rule{flex:1;height:1px;background:var(--hair)}
+.sectitle .count{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+/* finding rows */
+.findings{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.find{background:var(--surface);border:1px solid var(--hair);border-radius:7px;overflow:hidden;
+  box-shadow:var(--shadow)}
+.find.open{box-shadow:var(--shadow-lift)}
+.fbar{width:100%;text-align:left;padding:16px 18px;display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center}
+.fbar > span:nth-child(2){display:block}
+.chip{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;
+  padding:4px 7px;border-radius:3px;white-space:nowrap}
+.chip.crit{color:var(--crit);background:var(--crit-soft)}
+.chip.high{color:var(--high);background:var(--high-soft)}
+.chip.watch{color:var(--watch);background:var(--watch-soft)}
+.chip.void{color:var(--void);background:var(--void-soft)}
+.ftitle{display:block;font-weight:600;font-size:16px;letter-spacing:-.005em;line-height:1.35}
+.fref{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:4px}
+.fcost{text-align:right;font-family:var(--disp);font-variation-settings:"opsz" 30,"WONK" 1;font-weight:700;
+  font-size:19px;font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap}
+.fcost small{display:block;font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:2px}
+.find.crit .fcost{color:var(--crit)}
+.find.void .fcost{color:var(--void);font-size:15px}
+
+.fbody{display:none;border-top:1px solid var(--hair-soft);padding:4px 18px 22px}
+.find.open .fbody{display:block}
+
+.blk{padding-top:20px}
+.blk + .blk{border-top:1px solid var(--hair-soft);margin-top:4px}
+.blabel{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+  margin-bottom:9px}
+.blk p{font-size:14.5px;color:var(--ink-2);max-width:68ch}
+.fbody > .blk{max-width:800px}
+.blk p + p{margin-top:9px}
+.blk p strong{color:var(--ink);font-weight:600}
+
+.quote{background:var(--surface-sunk);border-left:2px solid var(--hair);padding:13px 16px;border-radius:0 4px 4px 0;
+  font-size:13px;line-height:1.7;color:var(--ink-2);max-width:74ch}
+.quote b{color:var(--ink);font-weight:600}
+
+.money{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+.money .big{font-family:var(--disp);font-variation-settings:"opsz" 60,"WONK" 1;font-weight:700;font-size:30px;
+  color:var(--crit);font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.find.high .money .big{color:var(--high)}
+.find.watch .money .big{color:var(--watch)}
+
+/* benchmark */
+.bench{max-width:640px}
+.bhist{display:flex;align-items:flex-end;gap:2px;height:42px;margin-bottom:6px}
+.bhist span{flex:1;min-height:3px;background:var(--hair);border-radius:1px 1px 0 0}
+.bhist span.hit{background:var(--accent)}
+.btrack{position:relative;height:5px;background:var(--hair-soft);border-radius:3px}
+.bmark{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--crit);
+  border:2px solid var(--surface);transform:translate(-50%,-50%)}
+.find.high .bmark{background:var(--high)} .find.watch .bmark{background:var(--watch)} .find.void .bmark{background:var(--void)}
+.bends{display:flex;justify-content:space-between;margin-top:7px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.bhead{font-size:15px;font-weight:600;margin-bottom:12px;max-width:60ch}
+
+/* law */
+.law{border-left:2px solid var(--accent);padding-left:16px}
+.cite{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500;margin-bottom:7px}
+
+/* redline */
+.redline{font-family:var(--mono);font-size:12.5px;line-height:1.75;background:var(--surface-sunk);
+  border:1px solid var(--hair-soft);border-radius:5px;padding:14px 16px;max-width:74ch;overflow-x:auto}
+.redline del{color:var(--crit);text-decoration-thickness:1px}
+.redline ins{color:var(--void);text-decoration:none;background:var(--void-soft);padding:1px 2px;border-radius:2px}
+.script{margin-top:14px;position:relative;background:var(--surface-sunk);border:1px solid var(--hair-soft);
+  border-radius:5px;padding:14px 16px;font-size:13.5px;line-height:1.7;color:var(--ink-2);white-space:pre-wrap;max-width:74ch}
+.copy{position:absolute;top:9px;right:9px;font-family:var(--mono);font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;background:var(--surface);border:1px solid var(--hair);padding:5px 9px;border-radius:4px;color:var(--ink-3)}
+.copy:hover{color:var(--ink);border-color:var(--ink-3)}
+
+/* clear list */
+.clear{margin-top:18px;background:var(--surface);border:1px solid var(--hair);border-radius:7px;padding:6px 20px;box-shadow:var(--shadow)}
+.clear div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:13px 0;align-items:baseline;
+  border-bottom:1px solid var(--hair-soft);font-size:14.5px;color:var(--ink-2)}
+.clear div:last-child{border-bottom:0}
+.clear code{font-family:var(--mono);font-size:11.5px;color:var(--void);white-space:nowrap}
+
+/* why */
+.why{margin-top:56px;background:var(--surface);border:1px solid var(--hair);border-radius:7px;padding:30px 32px;box-shadow:var(--shadow)}
+.why h3{font-size:21px;font-variation-settings:"opsz" 40,"WONK" 1;max-width:30ch}
+.whygrid{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px}
+.whygrid h4{font-size:14px;font-family:var(--sans);font-weight:700;letter-spacing:-.005em}
+.whygrid p{font-size:14px;color:var(--ink-2);margin-top:7px}
+
+.foot{margin-top:44px;padding-top:22px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--ink-3);max-width:78ch}
+.foot b{color:var(--ink-2)}
+
+@media (max-width:860px){
+  .intake{grid-template-columns:1fr;gap:30px;padding-block:36px 48px}
+  .paper{max-height:400px;padding:24px 22px}
+  .paper::after{margin:0 -22px -24px}
+  .fbar{grid-template-columns:auto minmax(0,1fr);row-gap:10px}
+  .fcost{grid-column:2;text-align:left}
+  .fcost small{margin-top:1px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="logo">Fine<em>Print</em></div>
+    <div class="tagline">Contracts made clear.</div>
+    <div class="mast-spacer"></div>
+    <div class="proto">Prototype · sample data</div>
+  </div>
+</header>
+
+<!-- ============ INTAKE ============ -->
+<section class="screen on" id="s-intake">
+<div class="wrap intake">
+  <div>
+    <div class="eyebrow">Residential lease · Indiana</div>
+    <h1>You already signed it. <span>Now find out what you agreed to.</span></h1>
+    <p class="lede">FinePrint reads the lease against <strong>Indiana Code</strong> and against 1,247 comparable leases, then tells you three things a summary won't: what each clause <strong>costs you in dollars</strong>, whether it's <strong>normal or unusual</strong>, and the <strong>exact sentence to ask for instead</strong>.</p>
+
+    <div class="filecard">
+      <div class="fileglyph"><i></i><i></i><i></i><i></i><i></i></div>
+      <div>
+        <div class="filename">Riverbend Commons — Unit 4B — Residential Lease.pdf</div>
+        <div class="filemeta">14 pages · 47 provisions · 4-bed joint lease · W. Lafayette, IN</div>
+        <div class="swap">Loaded sample. Drop a different lease to replace →</div>
+      </div>
+    </div>
+
+    <div class="go">
+      <button class="btn" id="run">Read this lease</button>
+      <p class="gonote">Takes about eight seconds. Nothing leaves this page.</p>
+    </div>
+  </div>
+
+  <div class="paper" aria-label="Lease document preview">
+    <h4>Residential Lease Agreement</h4>
+    <div class="addr">Riverbend Commons Apartments · 2140 Sagamore Pkwy W · West Lafayette, IN 47906</div>
+    <hr>
+    <p>THIS RESIDENTIAL LEASE AGREEMENT (the "Lease") is made and entered into this 11th day of March, 2024, by and between <b>RIVERBEND COMMONS PROPERTY GROUP, LLC</b>, an Indiana limited liability company ("Landlord"), and the individuals identified in Section 1.2 below (individually and collectively, "Tenant").</p>
+    <div class="art">Article 2 — Term</div>
+    <p><b>2.3 Automatic Renewal.</b> Upon expiration of the Initial Term, this Lease shall automatically renew for a successive term of twelve (12) months upon the same terms and conditions except as to rent, which shall be adjusted to the then-prevailing market rate as determined by Landlord in its sole discretion, unless Tenant delivers written notice of non-renewal to Landlord's management office not less than ninety (90) days prior to the expiration of the then-current term. Notice delivered by electronic mail shall not constitute valid notice hereunder. Tenant's failure to deliver timely notice shall be deemed an affirmative election to renew.</p>
+    <div class="art">Article 3 — Rent</div>
+    <p><b>3.2 Allocation.</b> For administrative convenience only, Landlord may apportion base rent among the individuals comprising Tenant at the rate of Six Hundred Seventy and 00/100 Dollars ($670.00) per bedroom per month. Such apportionment is for accounting purposes only and shall not operate to limit, divide, or otherwise affect the liability set forth in Section 3.4.</p>
+    <p><b>3.4 Joint and Several Liability.</b> Each individual comprising Tenant shall be jointly and severally liable for the full and complete performance of each and every obligation of Tenant under this Lease, including without limitation the payment of the entire monthly base rent, all additional rent, all charges, and all damages. Landlord may, at its sole election, proceed against any one or more individuals comprising Tenant for the entire amount owed without first proceeding against, joining, or exhausting remedies against any other individual…</p>
+    <div class="art">Article 5 — Security Deposit</div>
+    <p><b>5.2 Standard Turnover Deductions.</b> Tenant acknowledges and agrees that upon vacating the Premises, the following charges shall be assessed against the Security Deposit in all cases and without regard to the condition of the Premises: (a) professional carpet replacement in each bedroom occupied, at the rate of Two Hundred Twenty-Five and 00/100 Dollars ($225.00) per bedroom; (b) professional cleaning of the Premises at the rate of Three Hundred Fifty and 00/100 Dollars ($350.00); and (c) repainting of all interior walls…</p>
+    <div class="art">Article 14 — Assignment, Subletting, and Release</div>
+    <p><b>14.1 Prohibition.</b> Tenant shall not assign this Lease, sublet the Premises or any portion thereof, or permit occupancy by any person other than an individual named in Section 1.2, whether voluntarily, involuntarily, or by operation of law. Any purported assignment or sublease shall be void and shall constitute a material default. Landlord shall be under no obligation to consider, review, or consent to any proposed assignment, sublease, or substitute occupant, and Landlord's refusal to do so shall not be subject to any standard of reasonableness.</p>
+  </div>
+</div>
+</section>
+
+<!-- ============ SCANNING ============ -->
+<section class="screen" id="s-scan">
+<div class="wrap scan">
+  <h2>Reading the lease.</h2>
+  <div class="steps" id="steps"></div>
+</div>
+</section>
+
+<!-- ============ REPORT ============ -->
+<section class="screen" id="s-report">
+<div class="wrap report">
+
+  <div class="rhead">
+    <div>
+      <h1>Riverbend Commons, Unit 4B</h1>
+      <div class="sub">12-month term · Aug 1 2024 – Jul 31 2025 · $2,680/mo · 4 tenants · Tippecanoe County, IN</div>
+    </div>
+    <button class="restart" id="again">← read a different lease</button>
+  </div>
+
+  <div class="verdict">
+    <div class="vlabel">The one thing to know</div>
+    <h2>This lease has no exit. Not one you can use.</h2>
+    <p>Section 14.1 bans subletting, assignment, <em>and</em> substitute occupants, and says outright that the landlord's refusal isn't subject to any standard of reasonableness. Section 14.2 rules out transferring, graduating, or leaving school as grounds for release. Indiana has no statute that gives the right back. If you need out in month four, the lease's answer is: keep paying until July.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Provisions read</div><div class="v">47</div></div>
+    <div class="stat"><div class="k">Flagged</div><div class="v">6</div></div>
+    <div class="stat c"><div class="k">Critical</div><div class="v">2</div></div>
+    <div class="stat g"><div class="k">Unenforceable</div><div class="v">1</div></div>
+    <div class="stat c"><div class="k">Cost to walk away</div><div class="v">$6,530</div></div>
+  </div>
+
+  <div class="sectitle">
+    <h3>What to deal with</h3><div class="rule"></div>
+    <div class="count">ranked by what it costs you</div>
+  </div>
+  <div class="findings" id="findings"></div>
+
+  <div class="sectitle">
+    <h3>What's actually fine</h3><div class="rule"></div>
+    <div class="count">4 provisions</div>
+  </div>
+  <div class="clear">
+    <div><code>§ 9.1</code><span>Repair and habitability duties track IC 32-31-8-5 almost word for word. This is the landlord writing down what they already owe you.</span></div>
+    <div><code>§ 7.1</code><span>The pet ban carves out assistance animals "to the extent required by applicable law." Correct, and not every lease bothers.</span></div>
+    <div><code>§ 14.2</code><span>The military carve-out cites 50 U.S.C. § 3955 properly. It's federal law they can't waive anyway, but the citation is right.</span></div>
+    <div><code>§ 16.1</code><span>Venue is Tippecanoe County — where the building is and where you live. Not a forum-shopping clause.</span></div>
+  </div>
+
+  <div class="why">
+    <h3>Why this isn't just asking a chatbot to summarize the lease</h3>
+    <div class="whygrid">
+      <div>
+        <h4>It reads clauses against each other</h4>
+        <p>§ 3.4 is unremarkable on its own — most group leases are joint and several. § 14.1 is harsh but readable. The finding is the pair: you can be billed for a roommate who left, and you're forbidden from replacing them. A section-by-section summary never puts those two in the same sentence.</p>
+      </div>
+      <div>
+        <h4>It's grounded in one jurisdiction</h4>
+        <p>Every legal note below cites Indiana Code, and half the value is in what the statute <em>doesn't</em> say. Indiana sets no fixed notice period for entry and no cap on late fees — so those clauses aren't illegal, they're just unusually bad. That distinction changes what you ask for.</p>
+      </div>
+      <div>
+        <h4>It ends in a sentence you can send</h4>
+        <p>Understanding a clause doesn't change it. Each finding carries the redline — what to strike, what to put in its place — and a message you can paste into an email before you sign. The product is leverage, not literacy.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot"><b>About this prototype.</b> Built by Pulkit as a working model of FinePrint, a concept from an entrepreneurship course. The lease is synthetic — written for this demo and modeled on patterns common in Midwestern student housing. The 1,247-lease benchmark corpus is <b>illustrative sample data, not real research</b>; in a production build it would come from a corpus of filed and user-submitted leases. The Indiana Code citations are real and were verified against the current code. None of this is legal advice.</p>
+</div>
+</section>
+
+<script>
+(function(){
+"use strict";
+
+var STEPS=[
+  ["Splitting document into provisions","47 found"],
+  ["Classifying clause types","14 categories"],
+  ["Cross-referencing Indiana Code Title 32","9 matches"],
+  ["Checking for unenforceable terms","1 found"],
+  ["Benchmarking against comparable leases","1,247 compared"],
+  ["Scoring financial exposure","6 flags"],
+  ["Drafting counter-language","6 redlines"]
+];
+
+var F=[
+{
+  sev:"crit", chip:"Critical", key:"crit",
+  title:"You cannot leave. Not by subletting, not by assignment, not by finding a replacement.",
+  ref:"§ 14.1 · § 14.2 · § 14.3 — Assignment, Subletting, and Release",
+  cost:"$6,530", costLabel:"if you leave in November",
+  quote:'Tenant shall <b>not assign this Lease, sublet the Premises or any portion thereof, or permit occupancy by any person other than an individual named in Section 1.2</b>… Landlord shall be under no obligation to consider, review, or consent to any proposed assignment, sublease, or substitute occupant, and <b>Landlord’s refusal to do so shall not be subject to any standard of reasonableness.</b>',
+  costBig:"$6,530",
+  costText:"<p>Say you take a job in Chicago and move out November 1, with nine months left. You owe your $670 share for all nine months — <strong>$6,030</strong> — plus the $500 reletting administration fee in § 14.3, whether or not the landlord bothers to relet. That's <strong>$6,530</strong>, and § 14.3 says reletting is at their option, not their obligation.</p><p>The number gets worse under § 3.4 if a roommate leaves too. See the next finding.</p>",
+  pos:94,
+  hist:[3,6,11,18,24,31,38,44,39,28,17,9],
+  histHit:11,
+  bHead:"Harsher than 94% of the comparable leases in our corpus.",
+  bText:"<p>Of 1,247 Indiana student-housing leases: <strong>64%</strong> permit subletting with the landlord's written consent. <strong>21%</strong> require that consent not be unreasonably withheld. <strong>9%</strong> allow assignment to a qualified replacement tenant who passes screening. <strong>6%</strong> — this lease among them — prohibit all three and explicitly disclaim any reasonableness standard.</p><p>That last sentence is the unusual part. Plenty of leases are strict; very few write down that their refusal doesn't have to be reasonable.</p>",
+  cite:"Indiana Code Title 32, Article 31 — Landlord-Tenant Relations",
+  law:"<p>Indiana has <strong>no statute granting a tenant the right to sublease</strong>. If a lease is silent, you still need the landlord's permission. If a lease forbids it, your only route is to negotiate an amendment.</p><p>That matters more than it sounds. In some states a ban like this runs into a statutory reasonableness requirement. In Indiana there is nothing underneath it — <strong>this clause is the entire universe of your exit rights</strong>. Which is exactly why it has to be fixed before you sign, not after.</p>",
+  redline:'Tenant shall not assign this Lease, sublet the Premises… <del>Landlord shall be under no obligation to consider, review, or consent to any proposed assignment, sublease, or substitute occupant, and Landlord’s refusal to do so shall not be subject to any standard of reasonableness.</del> <ins>Tenant may sublet the Premises or assign this Lease with Landlord’s prior written consent, which shall not be unreasonably withheld, conditioned, or delayed. Landlord shall respond in writing to any request within ten (10) business days; failure to respond within that period shall be deemed consent.</ins>',
+  script:"Hi —\n\nBefore I sign, I'd like one change to Section 14.1. As written it bans subletting, assignment, and replacement occupants, and states that a refusal isn't subject to any standard of reasonableness. I'm not asking for a free exit — I'm asking that if I bring you a qualified replacement who passes your screening, the request gets considered.\n\nProposed language: \"Tenant may sublet or assign with Landlord's prior written consent, which shall not be unreasonably withheld, conditioned, or delayed. Landlord shall respond within ten (10) business days.\"\n\nHappy to sign as soon as that's in. Thanks."
+},
+{
+  sev:"crit", chip:"Critical", key:"crit",
+  title:"Your rent isn't $670. It's $2,680.",
+  ref:"§ 3.4 · § 3.2 — Joint and Several Liability",
+  cost:"$2,010", costLabel:"per month, not yours",
+  quote:'Each individual comprising Tenant shall be <b>jointly and severally liable</b> for the full and complete performance of each and every obligation of Tenant under this Lease, including without limitation <b>the payment of the entire monthly base rent</b>… Landlord may, at its sole election, proceed against any one or more individuals comprising Tenant for the entire amount owed <b>without first proceeding against, joining, or exhausting remedies against any other individual.</b>',
+  costBig:"$2,010 / mo",
+  costText:"<p>§ 3.2 shows you a tidy $670 per bedroom and then says the split is \"for accounting purposes only.\" § 3.4 is the operative clause: each of you owes the whole $2,680.</p><p>If all three roommates stop paying in February, the landlord can bill you for <strong>$2,010 a month that isn't yours</strong> and never contact them at all. Through July that's <strong>$12,060</strong>. You'd have to sue your roommates yourself to get it back.</p>",
+  pos:61,
+  hist:[2,4,9,16,26,37,46,41,33,22,12,5],
+  histHit:7,
+  bHead:"Standard — 79% of group leases we've read are joint and several. We're flagging it anyway.",
+  bText:"<p>\"Common\" and \"harmless\" aren't the same thing, and a tool that only flags the unusual would skip the clause most likely to actually cost you money.</p><p>What <em>is</em> unusual is the combination. <strong>79%</strong> of group leases are joint and several, but only <strong>17%</strong> pair that with a total ban on substitute occupants. This lease does both: you can be billed for a roommate who vanished, and § 14.1 forbids you from replacing them. Those two clauses are three articles apart and were almost certainly drafted separately. Together they're the trap.</p>",
+  cite:"No Indiana statute limits joint and several liability in residential leases",
+  law:"<p>Indiana enforces joint and several liability as written. There is no consumer-protection carve-out to fall back on here, and no requirement that the landlord pursue the defaulting tenant first.</p><p>Your leverage is entirely pre-signature. After signing, your only remedy against a roommate who stops paying is a separate civil claim you bring yourself, in small claims court, at your own cost.</p>",
+  redline:'Each individual comprising Tenant shall be jointly and severally liable… <ins>provided, however, that upon written notice from any individual comprising Tenant that another individual has vacated or defaulted, Landlord shall accept a qualified replacement occupant who satisfies Landlord’s standard screening criteria, and the departing individual’s obligations shall transfer to such replacement upon execution of an addendum.</ins>',
+  script:"Hi —\n\nOne more on Section 3.4. I understand joint and several liability is standard, and I'm not asking you to drop it. What I'd like is a release valve: if a roommate defaults or moves out, let the rest of us bring you a replacement who passes your normal screening, and transfer that person's share to them.\n\nRight now Section 3.4 makes me liable for the full $2,680 and Section 14.1 forbids me from finding anyone to cover it. I don't think that combination is intentional, but it's the one that worries me.\n\nThanks for considering it."
+},
+{
+  sev:"high", chip:"High", key:"high",
+  title:"Miss one date in early May and you've signed another year — at a price you haven't seen.",
+  ref:"§ 2.3 — Automatic Renewal",
+  cost:"$8,040", costLabel:"a second full term",
+  quote:'…this Lease shall <b>automatically renew for a successive term of twelve (12) months</b>… except as to rent, which shall be <b>adjusted to the then-prevailing market rate as determined by Landlord in its sole discretion</b>, unless Tenant delivers written notice of non-renewal… <b>not less than ninety (90) days prior</b> to the expiration of the then-current term. <b>Notice delivered by electronic mail shall not constitute valid notice hereunder.</b>',
+  costBig:"$8,040+",
+  costText:"<p>Your notice deadline is <strong>May 2, 2025</strong> — ninety days before the July 31 expiry, and about a week after finals. Miss it and you're in for twelve more months at $670/month minimum: <strong>$8,040</strong>, plus whatever \"prevailing market rate as determined by Landlord in its sole discretion\" turns out to be.</p><p>Two details make this worse than it looks. Email doesn't count, so a message to your leasing agent isn't notice. And nothing in the lease requires them to remind you.</p>",
+  pos:88,
+  hist:[4,9,17,29,42,48,35,24,15,9,5,2],
+  histHit:9,
+  bHead:"A 90-day window is longer than 84% of the leases in our corpus.",
+  bText:"<p>Sixty days is the norm (<strong>51%</strong>), thirty is common (<strong>24%</strong>), and <strong>16%</strong> require no notice at all because the lease simply ends. Ninety days puts this in the top <strong>9%</strong>.</p><p><strong>43%</strong> of comparable leases accept email as valid notice. This one specifically excludes it — which is the clause most likely to catch someone who genuinely tried to opt out.</p>",
+  cite:"No Indiana statute requires notice before a residential auto-renewal",
+  law:"<p>We found no provision in Indiana Code Title 32, Article 31 obligating a landlord to warn a residential tenant that an automatic renewal is approaching. The ninety-day clock is yours to track, and the consequence of losing track is a full second term.</p><p>Practical note: put May 2, 2025 in your calendar with a two-week lead, and send the notice by certified mail so you have the receipt. § 2.3 requires delivery to the management office in writing — hand-delivery with a date-stamped copy works too.</p>",
+  redline:'…unless Tenant delivers written notice of non-renewal to Landlord’s management office not less than <del>ninety (90)</del> <ins>sixty (60)</ins> days prior to the expiration of the then-current term. <del>Notice delivered by electronic mail shall not constitute valid notice hereunder.</del> <ins>Notice may be delivered by electronic mail to the address on file. Landlord shall deliver written reminder of the notice deadline not less than thirty (30) days before it falls; absent such reminder, this Lease shall terminate at the end of the then-current term.</ins>',
+  script:"Hi —\n\nCould we adjust Section 2.3? Two asks:\n\n1. Sixty days' notice instead of ninety. Sixty is what I've seen on every other unit I looked at.\n2. Allow email notice, and send a reminder thirty days before the deadline.\n\nThe deadline as written lands the week after finals, and if I miss it I'm committed to another twelve months at a rate that isn't set yet. A reminder costs you nothing and removes the only real risk I see in this section.\n\nThanks."
+},
+{
+  sev:"high", chip:"High", key:"high",
+  title:"$1,450 of your $1,340 deposit is spoken for before you move in.",
+  ref:"§ 5.2 · § 5.1 — Standard Turnover Deductions",
+  cost:"$1,450", costLabel:"auto-deducted",
+  quote:'Tenant acknowledges and agrees that upon vacating the Premises, the following charges <b>shall be assessed against the Security Deposit in all cases and without regard to the condition of the Premises</b>: (a) professional carpet replacement in each bedroom occupied, at $225.00 per bedroom; (b) professional cleaning at $350.00; and (c) repainting of all interior walls at $200.00. <b>Tenant waives any claim that such charges constitute ordinary wear and tear.</b>',
+  costBig:"$1,450",
+  costText:"<p>Four bedrooms of carpet at $225 is $900, plus $350 cleaning, plus $200 paint. The deposit is $1,340. <strong>The automatic charges exceed the deposit by $110.</strong></p><p>Read literally, you can finish this lease, hand back a spotless apartment, and still owe money. That arithmetic is the tell — this isn't a damages clause, it's a fee schedule wearing a damages clause's clothing.</p>",
+  pos:97,
+  hist:[8,19,34,47,44,31,19,11,6,4,2,1],
+  histHit:11,
+  bHead:"Automatic, condition-independent turnover charges appear in 23% of our corpus. Charges that exceed the deposit appear in 4%.",
+  bText:"<p>Flat cleaning fees are ordinary. Pre-assessed <em>carpet replacement</em> — not cleaning, replacement — for every bedroom regardless of condition is not: <strong>7%</strong>. The waiver-of-wear-and-tear sentence at the end appears in <strong>11%</strong>, and it's the part least likely to survive a challenge.</p>",
+  cite:"IC 32-31-3-12 — Return of deposits; deductions; liability",
+  law:"<p>Indiana permits a landlord to deduct only for <strong>accrued rent</strong>, <strong>damages the landlord has suffered or will reasonably suffer by reason of the tenant's noncompliance</strong>, and <strong>unpaid utility or sewer charges</strong>. A charge assessed \"without regard to the condition of the Premises\" is, by its own words, not a claim of damage from your noncompliance.</p><p>The second half of the statute is your actual leverage: the landlord must deliver an <strong>itemized written notice of deductions within forty-five (45) days</strong> after termination and delivery of possession. If they don't, you may recover the full deposit due plus <strong>reasonable attorney's fees</strong>.</p><p>One precondition people miss: the clock only runs once you've given the landlord a <strong>forwarding address in writing</strong>. Do that on the day you hand back the keys, and keep proof.</p>",
+  redline:'<del>Tenant acknowledges and agrees that the following charges shall be assessed against the Security Deposit in all cases and without regard to the condition of the Premises… Tenant waives any claim that such charges constitute ordinary wear and tear.</del> <ins>Landlord may deduct from the Security Deposit only for accrued rent, unpaid utility or sewer charges, and documented damage beyond ordinary wear and tear. Any deduction shall be supported by an itemized statement and dated photographs delivered within forty-five (45) days of termination and delivery of possession, as required by IC 32-31-3-12.</ins>',
+  script:"Hi —\n\nI'd like Section 5.2 revised before signing. As written it assesses carpet replacement, cleaning, and repainting \"in all cases and without regard to the condition of the Premises\" — $1,450 total against a $1,340 deposit, so the full deposit is committed on day one no matter how I leave the unit.\n\nIndiana Code 32-31-3-12 allows deductions for accrued rent, damages from a tenant's noncompliance, and unpaid utilities. I'm asking that Section 5.2 be replaced with that standard, with deductions itemized and photographed.\n\nI'm not trying to avoid legitimate charges — I'd just like them tied to actual condition. Thanks."
+},
+{
+  sev:"watch", chip:"Watch", key:"watch",
+  title:"“As practicable” is not a notice period.",
+  ref:"§ 11.2 · § 11.1 — Notice of Entry",
+  cost:"—", costLabel:"privacy, not dollars",
+  quote:'Landlord shall provide Tenant <b>such notice of entry as is practicable under the circumstances</b>. Tenant acknowledges that notice may be given by <b>posting at the entry door of the Premises</b> and that <b>no minimum advance period is required</b>. No notice shall be required in the event of an emergency, an apparent abandonment, or where entry is made <b>in the ordinary course of scheduled maintenance</b>.',
+  costBig:"No dollar figure",
+  costText:"<p>This one doesn't cost money, which is exactly why a dollar-ranked list would bury it and why people sign it without noticing.</p><p>The practical effect: a contractor can tape a sheet of paper to your door on the way in, and § 11.1 lets them enter to show the unit to prospective residents — meaning strangers walking through your bedroom during releasing season, on a schedule you don't set.</p>",
+  pos:90,
+  hist:[3,7,14,25,38,49,41,27,16,8,4,2],
+  histHit:10,
+  bHead:"76% of the leases in our corpus specify a fixed period. Almost all of those say 24 hours.",
+  bText:"<p><strong>68%</strong> require 24 hours' advance notice, <strong>8%</strong> require 48. <strong>24%</strong> use an open-ended \"reasonable\" or \"practicable\" standard like this one — and of those, only about a third also authorize notice by door-posting with no minimum period.</p>",
+  cite:"IC 32-31-5-6 — Landlord entry; notice",
+  law:"<p>Indiana requires a landlord to give <strong>\"reasonable written or oral notice\"</strong> of intent to enter, to enter <strong>only at reasonable times</strong>, and <strong>not to abuse the right of entry or use it to harass a tenant</strong>. Emergency entry needs no notice.</p><p>Note carefully what the statute does <em>not</em> say: <strong>Indiana sets no fixed hour count</strong>. So \"as practicable\" isn't illegal — it's just weaker than what most leases offer voluntarily. But \"reasonable\" is a statutory floor the lease cannot write below, and a notice taped to the door as someone walks in is unlikely to clear it. The § 11.2 carve-out for \"scheduled maintenance\" is the part that reads as an attempt to route around the statute entirely.</p>",
+  redline:'Landlord shall provide Tenant <del>such notice of entry as is practicable under the circumstances… no minimum advance period is required… or where entry is made in the ordinary course of scheduled maintenance</del> <ins>not less than twenty-four (24) hours’ advance notice by email or text message to the contact information on file, except in the case of an emergency threatening the safety of occupants or the Premises. Showings to prospective residents shall occur only between 9:00 a.m. and 7:00 p.m. and only with such notice.</ins>',
+  script:"Hi —\n\nSmall one on Section 11.2. It currently allows entry with notice \"as practicable,\" no minimum period, posted on the door — and exempts scheduled maintenance from notice entirely.\n\nCould we change it to 24 hours by email or text, with the usual emergency exception? That's what I've seen in every other lease I've read, and it mostly just means I know when someone's coming.\n\nThanks."
+},
+{
+  sev:"void", chip:"Unenforceable", key:"void",
+  title:"This clause doesn't work. You can ignore it — but ask them to strike it anyway.",
+  ref:"§ 16.4 — Waiver of Landlord Obligations",
+  cost:"In your favor", costLabel:"fees + remedies restored",
+  quote:'To the fullest extent permitted, <b>Tenant waives and releases Landlord from any and all statutory obligations respecting the condition, repair, and habitability of the Premises</b>, and waives any right to repair-and-deduct, rent withholding, rent escrow, or <b>the recovery of attorney’s fees</b> in connection with any claimed failure by Landlord to maintain the Premises.',
+  costBig:"Worth ~$1,500–4,000",
+  costText:"<p>That's the rough cost of a small-claims habitability action you'd otherwise pay out of pocket. § 16.4 tries to take away the statutory right to recover fees; the statute puts it back.</p><p>The clause is also useful as a signal. Nobody drafts a waiver this broad by accident — it's there to discourage tenants who don't know it's void. That tells you how this landlord expects a repair dispute to go.</p>",
+  pos:99,
+  hist:[41,33,24,17,12,8,6,4,3,2,1,1],
+  histHit:11,
+  bHead:"Appears in 11% of our corpus. Enforceable in none of them.",
+  bText:"<p>Broad habitability waivers are boilerplate carried forward from older lease templates. They survive in circulation because they're almost never challenged — most tenants read § 16.4, believe it, and don't call a lawyer.</p><p>This is the finding we'd most like a first-time renter to see, because it's the one that flips from bad news to leverage.</p>",
+  cite:"IC 32-31-8-4, 32-31-8-5 and 32-31-8-6",
+  law:"<p><strong>IC 32-31-8-4</strong> governs the effect of a waiver of the statute — a lease cannot contract the landlord out of the obligations imposed by <strong>IC 32-31-8-5</strong>, which requires the landlord to deliver the premises in a safe, clean and habitable condition and to maintain the electrical, plumbing, sanitary, heating, ventilating and air-conditioning systems and supplied appliances in good and safe working order.</p><p><strong>IC 32-31-8-6</strong> gives you a cause of action to enforce those duties, and on success you may recover <strong>actual and consequential damages, attorney's fees and court costs</strong>, plus injunctive relief. § 16.4 purports to waive exactly that fee recovery.</p><p>The one thing you must actually do: <strong>give written notice of the defect and a reasonable time to fix it</strong> before filing. That notice requirement is real, it's in the statute, and it's the step tenants skip. Email counts — keep the thread.</p>",
+  redline:'<del>16.4 Waiver of Landlord Obligations. To the fullest extent permitted, Tenant waives and releases Landlord from any and all statutory obligations respecting the condition, repair, and habitability of the Premises, and waives any right to repair-and-deduct, rent withholding, rent escrow, or the recovery of attorney’s fees…</del> <ins>[Section 16.4 deleted. Landlord’s obligations under IC 32-31-8-5 and Tenant’s remedies under IC 32-31-8-6 apply in full.]</ins>',
+  script:"Hi —\n\nLast one. Section 16.4 asks me to waive the landlord's statutory repair and habitability obligations and the right to recover attorney's fees. My understanding is that Indiana Code 32-31-8-4 doesn't permit that waiver, so the clause wouldn't hold up regardless.\n\nSince it has no effect either way, I'd like it struck from my copy. Leaving unenforceable language in a signed lease just creates confusion later if something actually breaks.\n\nThanks — everything else looks workable."
+}
+];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+function bench(f){
+  var max=Math.max.apply(null,f.hist);
+  var bars=f.hist.map(function(v,i){
+    return '<span class="'+(i===f.histHit?"hit":"")+'" style="height:'+Math.round(v/max*100)+'%"></span>';
+  }).join("");
+  return '<div class="bench">'+
+    '<div class="bhead">'+f.bHead+'</div>'+
+    '<div class="bhist" aria-hidden="true">'+bars+'</div>'+
+    '<div class="btrack"><div class="bmark" style="left:'+f.pos+'%"></div></div>'+
+    '<div class="bends"><span>Tenant-friendly</span><span>1,247 leases compared</span><span>Landlord-friendly</span></div>'+
+    '<div style="margin-top:16px">'+f.bText+'</div>'+
+  '</div>';
+}
+
+function render(){
+  var host=document.getElementById("findings");
+  host.innerHTML=F.map(function(f,i){
+    return '<article class="find '+f.key+(i===0?" open":"")+'" id="f'+i+'">'+
+      '<button class="fbar" aria-expanded="'+(i===0)+'" data-i="'+i+'">'+
+        '<span class="chip '+f.key+'">'+f.chip+'</span>'+
+        '<span><span class="ftitle">'+f.title+'</span><span class="fref">'+f.ref+'</span></span>'+
+        '<span class="fcost">'+f.cost+'<small>'+f.costLabel+'</small></span>'+
+      '</button>'+
+      '<div class="fbody">'+
+        '<div class="blk"><div class="blabel">What the lease says</div><div class="quote">'+f.quote+'</div></div>'+
+        '<div class="blk"><div class="blabel">What it costs you</div>'+
+          '<div class="money"><span class="big">'+f.costBig+'</span></div>'+
+          '<div style="margin-top:10px">'+f.costText+'</div></div>'+
+        '<div class="blk"><div class="blabel">How this compares</div>'+bench(f)+'</div>'+
+        '<div class="blk"><div class="blabel">What Indiana law says</div>'+
+          '<div class="law"><div class="cite">'+f.cite+'</div>'+f.law+'</div></div>'+
+        '<div class="blk"><div class="blabel">Ask for this instead</div>'+
+          '<div class="redline">'+f.redline+'</div>'+
+          '<div class="script"><button class="copy" data-c="'+i+'">Copy</button>'+esc(f.script)+'</div>'+
+        '</div>'+
+      '</div>'+
+    '</article>';
+  }).join("");
+
+  host.addEventListener("click",function(e){
+    var c=e.target.closest(".copy");
+    if(c){
+      e.stopPropagation();
+      var t=F[+c.getAttribute("data-c")].script;
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t).then(function(){
+          c.textContent="Copied";setTimeout(function(){c.textContent="Copy";},1600);
+        },function(){c.textContent="Select & copy";});
+      } else { c.textContent="Select & copy"; }
+      return;
+    }
+    var b=e.target.closest(".fbar");
+    if(!b)return;
+    var card=b.parentNode, open=card.classList.toggle("open");
+    b.setAttribute("aria-expanded",String(open));
+  });
+}
+
+function show(id){
+  ["s-intake","s-scan","s-report"].forEach(function(s){
+    document.getElementById(s).classList.toggle("on",s===id);
+  });
+  window.scrollTo(0,0);
+}
+
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+function runScan(){
+  var host=document.getElementById("steps");
+  host.innerHTML=STEPS.map(function(s,i){
+    return '<div class="step" id="st'+i+'"><span class="tick">✓</span><span>'+s[0]+'</span><span class="val"></span></div>';
+  }).join("");
+  show("s-scan");
+  var gap=reduce?60:850;
+  STEPS.forEach(function(s,i){
+    setTimeout(function(){
+      var el=document.getElementById("st"+i);
+      if(!el)return;
+      el.classList.add("done");
+      el.querySelector(".val").textContent=s[1];
+    },gap*(i+1));
+  });
+  setTimeout(function(){show("s-report");},gap*(STEPS.length+1));
+}
+
+document.getElementById("run").addEventListener("click",runScan);
+document.getElementById("again").addEventListener("click",function(){show("s-intake");});
+render();
+})();
+</script>
